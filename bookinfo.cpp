@@ -14,8 +14,6 @@ BookInfo::BookInfo(BookType type, QWidget *parent): QWidget(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout();
 
-    this->setFixedSize(WIDTH, HEIGHT);
-
     m_bgPic->setFixedSize(PIC_WIDTH,PIC_HEIGHT);
     layout->addWidget(m_bgPic);
     //0m_title->setFixedSize(WIDTH, 30);
@@ -36,7 +34,7 @@ BookInfo::BookInfo(BookType type, QWidget *parent): QWidget(parent)
     layout->addLayout(hlayout);
     this->setLayout(layout);
 
-    this->setFixedSize(WIDTH, HEIGHT);
+    setShowType(m_type);
 
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);
@@ -46,13 +44,14 @@ BookInfo::BookInfo(BookType type, QWidget *parent): QWidget(parent)
     this->setStyleSheet("background: rgba(184, 203, 221, 128);");
     //m_title->setStyleSheet("background-color: rgba(255, 0, 0, 255);");
     connect(m_showDetail, &QPushButton::clicked, this, [=](bool) {
-        emit showDetail("test.pdf", m_type);
+        emit showDetail("C:\\D盘\\gitProject\\ElectronicDataSell\\test.pdf", m_type);
     });
 }
 
-void BookInfo::setInfo(QPixmap bgPix, QString title, QString detail, int price, QString bookId)
+void BookInfo::setInfo(QString bgPix, QString title, QString detail, int price, QString bookId)
 {
-    bgPix.scaled(PIC_WIDTH, PIC_HEIGHT);
+    QPixmap pix = QPixmap(bgPix);
+    pix.scaled(PIC_WIDTH, PIC_HEIGHT);
     m_bgPic->setPixmap(bgPix);
     m_bgPic->setScaledContents(true);
     //this->setStyleSheet("background-image: url(:/img/picdemo.jpg);");
@@ -68,10 +67,44 @@ void BookInfo::setInfo(QPixmap bgPix, QString title, QString detail, int price, 
     m_price->setText(QString("%1 RMB").arg(price));
 
     m_bookId = bookId;
+}
 
-    if(m_type == BookType::SHOW_MODE)
+void BookInfo::setInfo(QString title, int price, QString bookId)
+{
+    QFontMetrics fontWidth(m_title->font());//得到每个字符的宽度
+    QString elideTitle = fontWidth.elidedText(QString(tr("Book Name: %1")).arg(title), Qt::ElideRight, WIDTH);//最大宽度150像素
+    m_title->setText(elideTitle);
+    m_price->setText(QString("%1 RMB").arg(price));
+
+    m_bookId = bookId;
+}
+
+void BookInfo::setShowType(BookType type)
+{    if(BookType::DETAIL_MODE == m_type) {
+
+    } else {
+
+    }
+    m_type = type;
+    switch(type)
     {
-        m_price->hide();
-        m_buyBtn->hide();
+        case BookType::ABSTRACT_MODE:
+        {
+            this->setFixedSize(WIDTH, ABSTRACT_HEIGHT);
+            m_bgPic->hide();
+            m_description->hide();
+            break;
+        }
+        case BookType::DETAIL_MODE:
+        {
+            this->setFixedSize(WIDTH, DETAIL_HEIGHT);
+            m_bgPic->show();
+            m_description->show();
+            break;
+        }
+        default:
+        {
+            break;
+        }
     }
 }

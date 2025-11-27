@@ -4,37 +4,24 @@
 #include <QWidget>
 #include <QVector>
 #include <QToolBar>
-#include <QAction>
-#include "bookinfo.h"
-#include "videoinfo.h"
 #include <QGridLayout>
+#include <tcpsocket.h>
+#include <messagebuilder.h>
 
 class MyAccountWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MyAccountWidget(QWidget *parent = nullptr);
+    explicit MyAccountWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::shared_ptr<MessageBuilder> msgBuilder, QWidget *parent = nullptr);
 
-private:
-    void createToolbar();
-    void actionTriggered(QAction *action);
-    void showBook();
-    void showVideo();
+
 signals:
 
 public slots:
 
 private:
-    QToolBar *m_typeBar;
-    QAction *m_bookAction;
-    QAction *m_videoAction;
-    QGridLayout *m_gridLayout;
-    QVector<BookInfo*> m_bookVector;
-    QVector<VideoInfo*> m_videoVector;
-
-private:
-    const int ROW = 4;
-    const int COLUMN = 7;
+    std::shared_ptr<JsonTcpClient> m_tcpClient;
+    std::shared_ptr<MessageBuilder> m_msgBuidler;
 };
 
 #endif // MYACCOUNTWIDGET_H

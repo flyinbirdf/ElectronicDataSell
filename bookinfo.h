@@ -6,20 +6,20 @@
 #include <QPushButton>
 #include <QPixmap>
 
-enum class BookType
-{
-    SELL_MODE,
-    SHOW_MODE
-};
-
 class BookInfo : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit BookInfo(BookType type, QWidget *parent = nullptr);
-    void setInfo(QPixmap bgPix, QString title, QString detail, int price, QString bookId);
-
+    enum class BookType
+    {
+        DETAIL_MODE,
+        ABSTRACT_MODE
+    };
+public:
+    explicit BookInfo(enum BookType type, QWidget *parent = nullptr);
+    void setInfo(QString bgPix, QString title, QString detail, int price, QString bookId);
+    void setInfo(QString title, int price, QString bookId);
+    void setShowType(BookType type);
 signals:
     void showDetail(QString name, BookType type);
 private:
@@ -33,7 +33,8 @@ private:
     BookType m_type;
 private:
     const int WIDTH = 200;
-    const int HEIGHT = 400;
+    const int DETAIL_HEIGHT = 400;
+    const int ABSTRACT_HEIGHT = 100;
     const int PIC_WIDTH = 200;
     const int PIC_HEIGHT = 200;
 };

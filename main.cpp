@@ -2,6 +2,7 @@
 
 #include <QApplication>
 //#include <QScreen>
+#include <QDialog>
 
 int main(int argc, char *argv[])
 {

@@ -1,7 +1,7 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network pdf #webenginewidgets
-
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network #webenginewidgets
+QT += pdf pdfwidgets
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     bookinfo.cpp \
     booksellwidget.cpp \
+    loginwidget.cpp \
     main.cpp \
     dialog.cpp \
+    messagebuilder.cpp \
     myaccountwidget.cpp \
+    pdfviewer.cpp \
     searchbar.cpp \
-    showpdfdoc.cpp \
     tcpsocket.cpp \
     videoinfo.cpp \
     videosellwidget.cpp
@@ -31,15 +33,17 @@ HEADERS += \
     bookinfo.h \
     booksellwidget.h \
     dialog.h \
+    loginwidget.h \
+    messagebuilder.h \
     myaccountwidget.h \
+    pdfviewer.h \
     searchbar.h \
-    showpdfdoc.h \
     tcpsocket.h \
     videoinfo.h \
     videosellwidget.h
 
 #DDINCLUDEPATH += C:/msys64/mingw64/include/poppler/qt5
-LIBS += -LC:/msys64/mingw64/lib #-lpoppler -lpoppler-qt5
+#LIBS += -LC:/msys64/mingw64/lib #-lpoppler -lpoppler-qt5
 # 链接必要的库文件
 #LIBS += -lpoppler-cpp
 #LIBS += -lpoppler-qt5

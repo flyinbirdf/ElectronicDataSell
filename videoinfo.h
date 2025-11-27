@@ -16,7 +16,7 @@ class VideoInfo : public QWidget
     Q_OBJECT
 public:
     explicit VideoInfo(VideoType type, QWidget *parent = nullptr);
-    void setInfo(QPixmap bgPix, QString title, QString detail, int price, QString bookId);
+    void setInfo(QString bgPix, QString title, QString detail, int price, QString bookId);
 
 signals:
 

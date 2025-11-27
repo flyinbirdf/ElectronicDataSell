@@ -43,10 +43,10 @@ VideoInfo::VideoInfo(VideoType type, QWidget *parent): QWidget(parent)
     //m_title->setStyleSheet("background-color: rgba(255, 0, 0, 255);");
 }
 
-void VideoInfo::setInfo(QPixmap bgPix, QString title, QString detail, int price, QString bookId)
+void VideoInfo::setInfo(QString bgPix, QString title, QString detail, int price, QString bookId)
 {
-    bgPix.scaled(PIC_WIDTH, PIC_HEIGHT);
-    m_bgPic->setPixmap(bgPix);
+    m_bgPic->setPixmap(QPixmap(bgPix));
+    m_bgPic->setFixedSize(PIC_WIDTH, PIC_HEIGHT);
     m_bgPic->setScaledContents(true);
     //this->setStyleSheet("background-image: url(:/img/picdemo.jpg);");
 
