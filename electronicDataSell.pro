@@ -26,6 +26,8 @@ SOURCES += \
     pdfviewer.cpp \
     searchbar.cpp \
     tcpsocket.cpp \
+    userbasicinfowidget.cpp \
+    userconfigwidget.cpp \
     videoinfo.cpp \
     videosellwidget.cpp
 
@@ -39,6 +41,8 @@ HEADERS += \
     pdfviewer.h \
     searchbar.h \
     tcpsocket.h \
+    userbasicinfowidget.h \
+    userconfigwidget.h \
     videoinfo.h \
     videosellwidget.h
 
