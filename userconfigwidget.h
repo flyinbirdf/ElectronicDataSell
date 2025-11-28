@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QLineEdit>
 
 class UserConfigWidget : public QWidget
 {
@@ -19,6 +20,7 @@ public:
 
 private:
     void setupUI();
+    void setupConnection();
     void setupStyle();
 
 private:
@@ -32,6 +34,11 @@ private:
     QPushButton *m_saveBtn;
     QPushButton *m_resetBtn;
     QVBoxLayout *m_mainLayout;
+    QLineEdit *m_sellPath;
+    QPushButton *m_openSellPath;
+    QLineEdit *m_buyPath;
+    QPushButton *m_openBuyPath;
+    QLabel *m_hintLabel;
 };
 
 #endif // USERCONFIGWIDGET_H

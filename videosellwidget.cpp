@@ -22,9 +22,9 @@ VideoSellWidget::VideoSellWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::
     // 设置样式
     setupStyle();
     // 刚启动，获取推荐页面
-    //QJsonObject msg = m_messageBuilder->reqestFavoritePageBookInfo(0);
-    //m_tcpClient->sendMessage(msg);
-    //m_needWait = true;
+    QJsonObject msg = m_messageBuilder->reqestFavoritePageBookInfo(0);
+    m_tcpClient->sendMessage(msg);
+    m_needWait = true;
 }
 
 void VideoSellWidget::setupUI()

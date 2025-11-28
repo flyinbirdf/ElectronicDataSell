@@ -24,7 +24,7 @@ BookSellWidget::BookSellWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::sh
     m_showTypeComb->addItems(searchTypes);
     connect(m_showTypeComb, &QComboBox::currentIndexChanged, this, &BookSellWidget::onCurrentIndexChanged);
     m_showTypeComb->setCurrentIndex(1);
-    QHBoxLayout *searchLayout = new QHBoxLayout(this);
+    QHBoxLayout *searchLayout = new QHBoxLayout();
     searchLayout->addStretch();
     searchLayout->addWidget(m_showTypeComb);
     searchLayout->addWidget(m_searchBar);
@@ -51,7 +51,7 @@ BookSellWidget::BookSellWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::sh
     m_content->setWidget(m_contentWidget);
     mainlayout->addWidget(m_content);
 
-    QHBoxLayout *lowerLayout = new QHBoxLayout(this);
+    QHBoxLayout *lowerLayout = new QHBoxLayout();
     lowerLayout->addStretch();
     lowerLayout->addWidget(m_prevBtn);
     lowerLayout->addWidget(m_infoLabel);
