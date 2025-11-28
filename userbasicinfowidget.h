@@ -35,3 +35,6 @@ private:
 
 #endif // USERBASICINFOWIDGET_H
 
+
+
+

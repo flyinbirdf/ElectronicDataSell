@@ -8,8 +8,9 @@
 #include <QVector>
 #include "booksellwidget.h"
 #include "videosellwidget.h"
-#include "memory"
+#include <memory>
 #include "myaccountwidget.h"
+#include "videoplayerwidget.h"
 
 class Dialog : public QDialog
 {
@@ -17,6 +18,7 @@ class Dialog : public QDialog
 
 public slots:
     void actionTriggered(QAction *action);
+    void onPdfViewerReturnBtnCliced();
 public:
     Dialog(QWidget *parent = nullptr);
     ~Dialog();
@@ -31,6 +33,8 @@ private:
     BookSellWidget *m_bookSellWidget;
     VideoSellWidget *m_videoSellWidget;
     MyAccountWidget *m_myAccountWidget;
+    PDFViewer *m_pdfViewer;
+    VideoPlayerWidget *m_videoPlayer;
     QAction* m_bookAction;
     QAction* m_videoAction;
     QAction* m_myAction;

@@ -24,9 +24,10 @@ public:
     explicit BookSellWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::shared_ptr<MessageBuilder> msgBuilder, QWidget *parent = nullptr);
 
 signals:
+    void showBookDetail(QString name, BookInfo::BookType type);
 
 public slots:
-    void showBookDetail(QString name, BookInfo::BookType type);
+    void onCurrentIndexChanged(int index);
 
 private:
     void refreshPage(QJsonObject obj);
@@ -51,7 +52,7 @@ private:
 private:
     const int COLUMN = 10;
     const int ROW = 8;
-    const int PAGE_SIZE = 56;
+    const int PAGE_SIZE = 80;
 };
 
 #endif // BOOKSELLWIDGET_H

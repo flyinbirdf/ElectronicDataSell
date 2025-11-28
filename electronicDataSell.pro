@@ -1,7 +1,7 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network #webenginewidgets
-QT += pdf pdfwidgets
+QT += pdf pdfwidgets multimedia multimediawidgets
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -29,6 +29,7 @@ SOURCES += \
     userbasicinfowidget.cpp \
     userconfigwidget.cpp \
     videoinfo.cpp \
+    videoplayerwidget.cpp \
     videosellwidget.cpp
 
 HEADERS += \
@@ -44,6 +45,7 @@ HEADERS += \
     userbasicinfowidget.h \
     userconfigwidget.h \
     videoinfo.h \
+    videoplayerwidget.h \
     videosellwidget.h
 
 #DDINCLUDEPATH += C:/msys64/mingw64/include/poppler/qt5

@@ -140,3 +140,6 @@ void UserBasicInfoWidget::setupStyle()
     m_titleLabel->setProperty("titleLabel", true);
 }
 
+
+
+

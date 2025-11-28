@@ -18,8 +18,20 @@ BookSellWidget::BookSellWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::sh
     , m_msgBuilder(msgBuilder)
     , m_showTypeComb(new QComboBox(this))
 {
+    QVBoxLayout *mainlayout = new QVBoxLayout(this);
+
+    QStringList searchTypes = { QString(tr("ABSTRACT")), QString(tr("DETAIL")) };
+    m_showTypeComb->addItems(searchTypes);
+    connect(m_showTypeComb, &QComboBox::currentIndexChanged, this, &BookSellWidget::onCurrentIndexChanged);
+    m_showTypeComb->setCurrentIndex(1);
+    QHBoxLayout *searchLayout = new QHBoxLayout(this);
+    searchLayout->addStretch();
+    searchLayout->addWidget(m_showTypeComb);
+    searchLayout->addWidget(m_searchBar);
+    searchLayout->addStretch();
+    mainlayout->addLayout(searchLayout);
+
     QGridLayout *contentLayout = new QGridLayout(m_contentWidget);
-    QVector<std::shared_ptr<BookInfo*>> pageitems;
     for(int i = 0; i < ROW; i++)
     {
         for(int j = 0; j < COLUMN; j++)
@@ -28,6 +40,7 @@ BookSellWidget::BookSellWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::sh
             m_bookInfoVector.push_back(book);
             book->setInfo(QString(":/img/picdemo.jpg"), QString("LOADING"), "This is demo for Book Name", 0, QString(""));
             contentLayout->addWidget(book, i, j);
+            //connect(book, &BookInfo::showDetail, this, &BookSellWidget::showBookDetail);
             connect(book, &BookInfo::showDetail, this, &BookSellWidget::showBookDetail);
         }
     }
@@ -36,48 +49,6 @@ BookSellWidget::BookSellWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::sh
     contentLayout->setContentsMargins(10,10,10,10);
     m_contentWidget->setLayout(contentLayout);
     m_content->setWidget(m_contentWidget);
-
-    QVBoxLayout *mainlayout = new QVBoxLayout(this);
-
-    QStringList searchTypes = { QString(tr("ABSTRACT")), QString(tr("DETAIL")) };
-    m_showTypeComb->addItems(searchTypes);
-    connect(m_showTypeComb, &QComboBox::currentIndexChanged, this, [=](int index) {
-        switch(index)
-        {
-            case 0:
-            {
-                m_showType = BookInfo::BookType::ABSTRACT_MODE;
-                break;
-            }
-            case 1:
-            {
-                m_showType = BookInfo::BookType::DETAIL_MODE;
-                break;
-            }
-            default:
-            {
-                m_showType = BookInfo::BookType::DETAIL_MODE;
-            }
-        }
-
-        for(auto &one : m_bookInfoVector)
-        {
-            one->setShowType(m_showType);
-        }
-        //m_contentWidget->layout()->invalidate();
-        //m_contentWidget->layout()->activate();
-        m_contentWidget->updateGeometry();
-        m_contentWidget->adjustSize();
-    });
-    m_showTypeComb->setCurrentIndex(1);
-
-    QHBoxLayout *searchLayout = new QHBoxLayout(this);
-    searchLayout->addStretch();
-    searchLayout->addWidget(m_showTypeComb);
-    searchLayout->addWidget(m_searchBar);
-    searchLayout->addStretch();
-
-    mainlayout->addLayout(searchLayout);
     mainlayout->addWidget(m_content);
 
     QHBoxLayout *lowerLayout = new QHBoxLayout(this);
@@ -110,14 +81,33 @@ BookSellWidget::BookSellWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::sh
     m_tcpClient->sendMessage(msg);
 }
 
-void BookSellWidget::showBookDetail(QString name, BookInfo::BookType type)
+void BookSellWidget::onCurrentIndexChanged(int index)
 {
-    if(m_showPdfViewer == nullptr) {
-        m_showPdfViewer = new PDFViewer(this);
+    switch(index)
+    {
+    case 0:
+    {
+        m_showType = BookInfo::BookType::ABSTRACT_MODE;
+        break;
+    }
+    case 1:
+    {
+        m_showType = BookInfo::BookType::DETAIL_MODE;
+        break;
+    }
+    default:
+    {
+        m_showType = BookInfo::BookType::DETAIL_MODE;
+    }
     }
 
-    m_showPdfViewer->loadPDF(name);
-    m_showPdfViewer->show();
+    for(auto &one : m_bookInfoVector)
+    {
+        one->setShowType(m_showType);
+    }
+
+    m_contentWidget->updateGeometry();
+    m_contentWidget->adjustSize();
 }
 
 void BookSellWidget::refreshPage(QJsonObject obj)
@@ -137,6 +127,7 @@ void BookSellWidget::refreshPage(QJsonObject obj)
         if(i < items.size()) {
             QJsonObject item = items[i].toObject();
             m_bookInfoVector[i]->setInfo(item["picture"].toString(), item["title"].toString(), item["detail"].toString(), item["price"].toInt(), item["id"].toString());
+            m_bookInfoVector[i]->show();
         } else {
             m_bookInfoVector[i]->hide();
         }

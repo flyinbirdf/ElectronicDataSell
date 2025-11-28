@@ -5,14 +5,12 @@ VideoInfo::VideoInfo(VideoType type, QWidget *parent): QWidget(parent)
   , m_bgPic(new QLabel(this))
   , m_title(new QLabel(this))
   , m_description(new QLabel(this))
-  , m_price(new QLabel(this))
+  , m_priceLabel(new QLabel(this))
   , m_buyBtn(new QPushButton(tr("Buy"), this))
   , m_showDetail(new QPushButton(tr("Detail"), this))
   , m_type(type)
 {
     QVBoxLayout *layout = new QVBoxLayout();
-
-    this->setFixedSize(WIDTH, HEIGHT);
 
     m_bgPic->setFixedSize(PIC_WIDTH,PIC_HEIGHT);
     layout->addWidget(m_bgPic);
@@ -22,8 +20,8 @@ VideoInfo::VideoInfo(VideoType type, QWidget *parent): QWidget(parent)
     layout->addWidget(m_description);
 
     QHBoxLayout *hlayout = new QHBoxLayout();
-    m_price->setFixedSize(WIDTH/3, 30);
-    hlayout->addWidget(m_price);
+    m_priceLabel->setFixedSize(WIDTH/3, 30);
+    hlayout->addWidget(m_priceLabel);
     m_showDetail->setFixedSize(WIDTH/3, 30);
     hlayout->addWidget(m_showDetail);
     m_buyBtn->setFixedSize(WIDTH/3, 30);
@@ -40,31 +38,41 @@ VideoInfo::VideoInfo(VideoType type, QWidget *parent): QWidget(parent)
     hlayout->setSpacing(0);
 
     this->setStyleSheet("background: rgba(184, 203, 221, 128);");
-    //m_title->setStyleSheet("background-color: rgba(255, 0, 0, 255);");
 }
 
-void VideoInfo::setInfo(QString bgPix, QString title, QString detail, int price, QString bookId)
+void VideoInfo::setInfo(QString bgPix, QString title, QString detail, int price, QString videoId)
 {
     m_bgPic->setPixmap(QPixmap(bgPix));
-    m_bgPic->setFixedSize(PIC_WIDTH, PIC_HEIGHT);
+    //m_bgPic->setFixedSize(PIC_WIDTH, PIC_HEIGHT);
     m_bgPic->setScaledContents(true);
-    //this->setStyleSheet("background-image: url(:/img/picdemo.jpg);");
 
     QFontMetrics fontWidth(m_title->font());//得到每个字符的宽度
     QString elideTitle = fontWidth.elidedText(QString(tr("Book Name: %1")).arg(title), Qt::ElideRight, WIDTH);//最大宽度150像素
     m_title->setText(elideTitle);
 
     m_description->setWordWrap(true);
-    //QFontMetrics descriptionWidth(m_description->font());//得到每个字符的宽度
-    //QString elideDescription = fontWidth.elidedText(QString(tr("Abstract: %1")).arg(detail), Qt::ElideRight, WIDTH);//最大宽度150像素
     m_description->setText(detail);
-    m_price->setText(QString("%1 RMB").arg(price));
 
-    m_bookId = bookId;
+    m_price = price;
+    m_priceLabel->setText(QString("%1 Yuan").arg(price));
 
-    if(m_type == VideoType::SHOW_MODE)
+    m_videoId = videoId;
+
+}
+
+void VideoInfo::setShowType(VideoType type)
+{
+    m_type = type;
+    if(type == VideoType::ABSTRACT_MODE)
     {
-        m_price->hide();
-        m_buyBtn->hide();
+        m_bgPic->hide();
+        m_description->hide();
+        this->setFixedSize(WIDTH, ABSTRACT_HEIGHT);
+    }
+    else if(type == VideoType::DETAIL_MODE)
+    {
+        m_bgPic->show();
+        m_description->show();
+        this->setFixedSize(WIDTH, HEIGHT);
     }
 }

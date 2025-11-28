@@ -16,13 +16,16 @@
 #include <QPdfView>
 //#include <QPdfPageNavigation>
 
-class PDFViewer : public QMainWindow
+class PDFViewer : public QWidget
 {
     Q_OBJECT
 
 public:
     PDFViewer(QWidget *parent = nullptr);
     void loadPDF(const QString &filePath);
+
+signals:
+    void returnBtnClicked();
 
 private slots:
     void updatePageDisplay();
@@ -43,6 +46,8 @@ private:
     void connectSignals();
 
 private:
+    QToolBar *m_toolbar;
+    QStatusBar *m_statusbar;
     QPdfDocument *m_pdfDocument;
     QPdfView *m_pdfView;
     //QPdfPageNavigation *m_pageNavigation;
@@ -50,5 +55,7 @@ private:
     QVBoxLayout *m_pagesLayout = nullptr;
     int m_totalPages = 0;
     qreal m_scaleFactor = 2.0; // 缩放因子
+    QLabel *m_scaleLabel;
+    QPushButton *m_returnBtn;
 };
 

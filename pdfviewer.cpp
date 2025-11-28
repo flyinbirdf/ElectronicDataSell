@@ -1,7 +1,10 @@
 ﻿#include "pdfviewer.h"
 
 
-PDFViewer::PDFViewer(QWidget *parent) : QMainWindow(parent)
+PDFViewer::PDFViewer(QWidget *parent) : QWidget(parent)
+    , m_toolbar(new QToolBar(this))
+    , m_statusbar(new QStatusBar(this))
+    , m_returnBtn(new QPushButton(tr("Return"), this))
 {
     m_pdfDocument = new QPdfDocument(this);
     setupUI();
@@ -22,7 +25,7 @@ void PDFViewer::loadPDF(const QString &filePath)
     //m_pageNavigation->setPageCount(m_totalPages);
     //m_pageNavigation->setCurrentPage(0);
 
-    statusBar()->showMessage(QString("已加载PDF: %1, 共 %2 页").arg(filePath).arg(m_totalPages));
+    m_statusbar->showMessage(QString("已加载PDF: %1, 共 %2 页").arg(filePath).arg(m_totalPages));
     updatePageDisplay();
 }
 
@@ -39,6 +42,9 @@ void PDFViewer::updatePageDisplay()
     if (m_pageRangeCombo->currentIndex() == 0) { // 前5页
         pagesToShow = qMin(5, m_totalPages);
     }
+
+    m_scaleLabel->setText(QString("缩放: %1%").arg(int(m_scaleFactor * 100)));
+
 
     // 显示页面
     for (int i = 0; i < pagesToShow; ++i) {
@@ -102,15 +108,11 @@ void PDFViewer::onPageChanged(int page)
 
 void PDFViewer::setupUI()
 {
-    setWindowTitle("PDF查看器");
-
-    QWidget *centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
-
-    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     // 创建工具栏
     setupToolBar();
+    mainLayout->addWidget(m_toolbar);
 
     // 创建控制面板
     QHBoxLayout *controlLayout = new QHBoxLayout();
@@ -120,12 +122,13 @@ void PDFViewer::setupUI()
     m_pageRangeCombo->addItem("前5页");
     m_pageRangeCombo->addItem("全部页面");
 
-    QLabel *scaleLabel = new QLabel(QString("缩放: %1%").arg(int(m_scaleFactor * 100)));
+    m_scaleLabel = new QLabel(QString("缩放: %1%").arg(int(m_scaleFactor * 100)));
 
     controlLayout->addWidget(rangeLabel);
     controlLayout->addWidget(m_pageRangeCombo);
+    controlLayout->addWidget(m_scaleLabel);
     controlLayout->addStretch();
-    controlLayout->addWidget(scaleLabel);
+    controlLayout->addWidget(m_returnBtn);
 
     mainLayout->addLayout(controlLayout);
 
@@ -143,21 +146,20 @@ void PDFViewer::setupUI()
     mainLayout->addWidget(scrollArea);
 
     // 创建状态栏
-    statusBar()->showMessage("就绪");
+    m_statusbar->showMessage("就绪");
+    mainLayout->addWidget(m_statusbar);
 }
 
 void PDFViewer::setupToolBar()
 {
-    QToolBar *toolBar = addToolBar("主工具栏");
-
     QAction *openAction = new QAction("打开", this);
     QAction *zoomInAction = new QAction("放大", this);
     QAction *zoomOutAction = new QAction("缩小", this);
 
-    toolBar->addAction(openAction);
-    toolBar->addSeparator();
-    toolBar->addAction(zoomInAction);
-    toolBar->addAction(zoomOutAction);
+    m_toolbar->addAction(openAction);
+    m_toolbar->addSeparator();
+    m_toolbar->addAction(zoomInAction);
+    m_toolbar->addAction(zoomOutAction);
 
     connect(openAction, &QAction::triggered, this, &PDFViewer::openFile);
     connect(zoomInAction, &QAction::triggered, this, &PDFViewer::zoomIn);
@@ -168,6 +170,8 @@ void PDFViewer::connectSignals()
 {
     connect(m_pageRangeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &PDFViewer::updatePageDisplay);
+
+    connect(m_returnBtn, &QPushButton::clicked, this, &PDFViewer::returnBtnClicked);
 
     // m_pageNavigation = new QPdfPageNavigation(this);
     // m_pageNavigation->setDocument(m_pdfDocument);

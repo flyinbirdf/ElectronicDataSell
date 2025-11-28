@@ -44,6 +44,7 @@ BookInfo::BookInfo(BookType type, QWidget *parent): QWidget(parent)
     this->setStyleSheet("background: rgba(184, 203, 221, 128);");
     //m_title->setStyleSheet("background-color: rgba(255, 0, 0, 255);");
     connect(m_showDetail, &QPushButton::clicked, this, [=](bool) {
+        qDebug()<<"Send showDetail";
         emit showDetail("C:\\D盘\\gitProject\\ElectronicDataSell\\test.pdf", m_type);
     });
 }

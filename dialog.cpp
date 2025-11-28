@@ -1,5 +1,6 @@
 ﻿#include "dialog.h"
 #include <QVBoxLayout>
+#include <QDebug>
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
@@ -10,6 +11,7 @@ Dialog::Dialog(QWidget *parent)
     , m_bookSellWidget(nullptr)
     , m_videoSellWidget(nullptr)
     , m_myAccountWidget(nullptr)
+    , m_pdfViewer(nullptr)
 {
 
     createToolbar();
@@ -17,9 +19,6 @@ Dialog::Dialog(QWidget *parent)
     m_bookSellWidget = new BookSellWidget(m_tcpClient, m_msgBuilder, this);
 
     m_stackedWidget->addWidget(m_bookSellWidget);
-    //m_stackedWidget->addWidget(m_videoSellWidget);
-    //m_stackedWidget->addWidget(m_myAccountWidget);
-    //m_stackedWidget->setCurrentWidget(m_bookSellWidget);
 
     QVBoxLayout *layout = new QVBoxLayout();
 
@@ -32,6 +31,17 @@ Dialog::Dialog(QWidget *parent)
 
     this->setLayout(layout);
 
+    connect(m_bookSellWidget, &BookSellWidget::showBookDetail, this, [=](QString name, BookInfo::BookType type) {
+        qDebug()<<"Enter pdfViewer show";
+        if(m_pdfViewer == nullptr) {
+            m_pdfViewer = new PDFViewer(this);
+            m_stackedWidget->addWidget(m_pdfViewer);
+            connect(m_pdfViewer, &PDFViewer::returnBtnClicked, this, &Dialog::onPdfViewerReturnBtnCliced);
+
+        }
+        m_pdfViewer->loadPDF(name);
+        m_stackedWidget->setCurrentWidget(m_pdfViewer);
+    });
     // 设置窗口标题
     setWindowTitle(tr("electronic data sell system"));
 
@@ -82,28 +92,28 @@ void Dialog::actionTriggered(QAction *action)
 {
     if(action->text() == tr("BOOK"))
     {
-        if(m_bookSellWidget == nullptr)
-        {
-            m_bookSellWidget = new BookSellWidget(m_tcpClient, m_msgBuilder, this);
-            m_stackedWidget->addWidget(m_videoSellWidget);
-        }
         m_stackedWidget->setCurrentWidget(m_bookSellWidget);
-        //m_videoAction->setChecked(false);
-        //m_myAction->setChecked(false);
-        m_bookAction->setChecked(true);
-
     }
     else if(action->text() == tr("VIDEO"))
     {
-        if(m_bookSellWidget == nullptr)
+        if(m_videoSellWidget == nullptr)
         {
             m_videoSellWidget = new VideoSellWidget(m_tcpClient, m_msgBuilder, this);
             m_stackedWidget->addWidget(m_videoSellWidget);
+
+            connect(m_videoSellWidget, &VideoSellWidget::showVideoDetail, this, [=](QString name) {
+                qDebug()<<"Enter pdfViewer show";
+                if(m_videoPlayer == nullptr) {
+                    m_videoPlayer = new VideoPlayerWidget(this);
+                    m_stackedWidget->addWidget(m_videoPlayer);
+                    //connect(m_videoPlayer, &PDFViewer::returnBtnClicked, this, &Dialog::onPdfViewerReturnBtnCliced);
+
+                }
+                m_videoPlayer->loadVideo(name);
+                m_stackedWidget->setCurrentWidget(m_videoPlayer);
+            });
         }
         m_stackedWidget->setCurrentWidget(m_videoSellWidget);
-        //m_bookAction->setChecked(false);
-        //m_myAction->setChecked(false);
-        m_videoAction->setChecked(true);
     }
     else if(action->text() == tr("MY ACCOUNT"))
     {
@@ -113,11 +123,12 @@ void Dialog::actionTriggered(QAction *action)
             m_stackedWidget->addWidget(m_myAccountWidget);
         }
         m_stackedWidget->setCurrentWidget(m_myAccountWidget);
-        // m_stackedWidget->setCurrentWidget(m_myAccountWidget);
-        // m_bookAction->setChecked(false);
-        // m_videoAction->setChecked(false);
-        m_myAction->setChecked(true);
     }
 
     setCheckedAction(action);
+}
+
+void Dialog::onPdfViewerReturnBtnCliced()
+{
+    m_stackedWidget->setCurrentWidget(m_bookSellWidget);
 }
