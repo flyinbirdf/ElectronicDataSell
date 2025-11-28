@@ -36,10 +36,10 @@ private:
     VideoType m_type;
     int m_price;
 private:
-    const int WIDTH = 200;
+    const int WIDTH = 300;
     const int HEIGHT = 400;
     const int ABSTRACT_HEIGHT = 100;
-    const int PIC_WIDTH = 200;
+    const int PIC_WIDTH = 300;
     const int PIC_HEIGHT = 200;
 };
 

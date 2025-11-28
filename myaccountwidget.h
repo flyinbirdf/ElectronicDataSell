@@ -28,6 +28,7 @@ private:
     void setupUI();
     void createToolbar();
     void setCheckedAction(QAction *curAction);
+    void setupStyle();
 
 private:
     std::shared_ptr<JsonTcpClient> m_tcpClient;

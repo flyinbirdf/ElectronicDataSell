@@ -8,6 +8,7 @@ PDFViewer::PDFViewer(QWidget *parent) : QWidget(parent)
 {
     m_pdfDocument = new QPdfDocument(this);
     setupUI();
+    setupStyle();
     connectSignals();
 }
 
@@ -53,13 +54,13 @@ void PDFViewer::updatePageDisplay()
         QLabel *pageLabel = new QLabel();
         pageLabel->setPixmap(QPixmap::fromImage(image));
         pageLabel->setAlignment(Qt::AlignCenter);
-        pageLabel->setStyleSheet("border: 1px solid #ccc; margin: 10px; background: white;");
+        pageLabel->setStyleSheet("border: 2px solid #BBDEFB; margin: 10px; background: white; border-radius: 8px;");
         pageLabel->setFrameStyle(QFrame::Box);
 
         // 添加页码
         QLabel *pageNumberLabel = new QLabel(QString("第 %1 页").arg(i + 1));
         pageNumberLabel->setAlignment(Qt::AlignCenter);
-        pageNumberLabel->setStyleSheet("color: #666; margin-bottom: 5px;");
+        pageNumberLabel->setStyleSheet("color: #1976D2; margin-bottom: 5px; font-weight: bold;");
 
         QVBoxLayout *pageLayout = new QVBoxLayout();
         pageLayout->addWidget(pageNumberLabel);
@@ -177,5 +178,133 @@ void PDFViewer::connectSignals()
     // m_pageNavigation->setDocument(m_pdfDocument);
     // connect(m_pageNavigation, &QPdfPageNavigation::currentPageChanged,
     //         this, &PDFViewer::onPageChanged);
+}
+
+void PDFViewer::setupStyle()
+{
+    setStyleSheet(
+        "QWidget {"
+        "    background-color: #E3F2FD;"
+        "}"
+        ""
+        "QToolBar {"
+        "    background-color: #BBDEFB;"
+        "    border: none;"
+        "    border-radius: 8px;"
+        "    padding: 8px;"
+        "    spacing: 5px;"
+        "}"
+        ""
+        "QToolBar QToolButton {"
+        "    background-color: transparent;"
+        "    border: 2px solid transparent;"
+        "    border-radius: 6px;"
+        "    padding: 8px 15px;"
+        "    font-size: 14px;"
+        "    font-weight: bold;"
+        "    color: #1976D2;"
+        "}"
+        ""
+        "QToolBar QToolButton:hover {"
+        "    background-color: #90CAF9;"
+        "    color: #0D47A1;"
+        "}"
+        ""
+        "QComboBox {"
+        "    border: 2px solid #BBDEFB;"
+        "    border-radius: 8px;"
+        "    padding: 6px 12px;"
+        "    font-size: 14px;"
+        "    background-color: white;"
+        "    color: #333333;"
+        "    min-width: 100px;"
+        "}"
+        "QComboBox:focus {"
+        "    border: 2px solid #2196F3;"
+        "    background-color: #F5FAFF;"
+        "}"
+        "QComboBox::drop-down {"
+        "    border: none;"
+        "    background-color: #2196F3;"
+        "    border-radius: 0 8px 8px 0;"
+        "    width: 30px;"
+        "}"
+        "QComboBox::down-arrow {"
+        "    image: none;"
+        "    border-left: 5px solid transparent;"
+        "    border-right: 5px solid transparent;"
+        "    border-top: 6px solid white;"
+        "    width: 0;"
+        "    height: 0;"
+        "}"
+        "QComboBox QAbstractItemView {"
+        "    border: 2px solid #BBDEFB;"
+        "    border-radius: 8px;"
+        "    selection-background-color: #2196F3;"
+        "    selection-color: white;"
+        "    background-color: white;"
+        "}"
+        ""
+        "QPushButton {"
+        "    border: none;"
+        "    border-radius: 8px;"
+        "    font-size: 14px;"
+        "    font-weight: bold;"
+        "    color: white;"
+        "    background-color: #2196F3;"
+        "    padding: 8px 20px;"
+        "    min-width: 80px;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: #1976D2;"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #1565C0;"
+        "}"
+        ""
+        "QLabel {"
+        "    color: #424242;"
+        "    font-size: 14px;"
+        "}"
+        ""
+        "QStatusBar {"
+        "    background-color: #BBDEFB;"
+        "    color: #1976D2;"
+        "    border-top: 1px solid #90CAF9;"
+        "}"
+        ""
+        "QScrollArea {"
+        "    background-color: #E3F2FD;"
+        "    border: none;"
+        "}"
+        ""
+        "QScrollBar:vertical {"
+        "    background-color: #BBDEFB;"
+        "    width: 12px;"
+        "    border-radius: 6px;"
+        "}"
+        "QScrollBar::handle:vertical {"
+        "    background-color: #64B5F6;"
+        "    border-radius: 6px;"
+        "    min-height: 20px;"
+        "}"
+        "QScrollBar::handle:vertical:hover {"
+        "    background-color: #42A5F5;"
+        "}"
+        ""
+        "QScrollBar:horizontal {"
+        "    background-color: #BBDEFB;"
+        "    height: 12px;"
+        "    border-radius: 6px;"
+        "}"
+        "QScrollBar::handle:horizontal {"
+        "    background-color: #64B5F6;"
+        "    border-radius: 6px;"
+        "    min-width: 20px;"
+        "}"
+        "QScrollBar::handle:horizontal:hover {"
+        "    background-color: #42A5F5;"
+        "}"
+    );
 }
 

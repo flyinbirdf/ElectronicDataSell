@@ -31,6 +31,7 @@ public slots:
 
 private:
     void refreshPage(QJsonObject obj);
+    void setupStyle();
 
 private:
     int m_page;

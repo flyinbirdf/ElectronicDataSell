@@ -72,13 +72,88 @@ BookSellWidget::BookSellWidget(std::shared_ptr<JsonTcpClient> tcpClient, std::sh
         m_tcpClient->sendMessage(msg);
     });
 
-    connect(m_prevBtn, &QPushButton::clicked, this, [=](bool) {
+    connect(m_nextBtn, &QPushButton::clicked, this, [=](bool) {
         auto msg = m_msgBuilder->reqestPageBookInfo(m_page+1, m_searchBar->text());
         m_tcpClient->sendMessage(msg);
     });
 
+    // 设置样式
+    setupStyle();
+
     QJsonObject msg = m_msgBuilder->reqestFavoritePageBookInfo(0);
     m_tcpClient->sendMessage(msg);
+}
+
+void BookSellWidget::setupStyle()
+{
+    setStyleSheet(
+        "QWidget {"
+        "    background-color: #E3F2FD;"
+        "}"
+        ""
+        "QScrollArea {"
+        "    background-color: #E3F2FD;"
+        "    border: none;"
+        "}"
+        ""
+        "QComboBox {"
+        "    border: 2px solid #BBDEFB;"
+        "    border-radius: 8px;"
+        "    padding: 8px 15px;"
+        "    font-size: 14px;"
+        "    background-color: white;"
+        "    color: #333333;"
+        "    min-width: 120px;"
+        "}"
+        "QComboBox:focus {"
+        "    border: 2px solid #2196F3;"
+        "    background-color: #F5FAFF;"
+        "}"
+        "QComboBox::drop-down {"
+        "    border: none;"
+        "    background-color: #2196F3;"
+        "    border-radius: 0 8px 8px 0;"
+        "    width: 30px;"
+        "}"
+        "QComboBox::down-arrow {"
+        "    image: none;"
+        "    border-left: 5px solid transparent;"
+        "    border-right: 5px solid transparent;"
+        "    border-top: 6px solid white;"
+        "    width: 0;"
+        "    height: 0;"
+        "}"
+        "QComboBox QAbstractItemView {"
+        "    border: 2px solid #BBDEFB;"
+        "    border-radius: 8px;"
+        "    selection-background-color: #2196F3;"
+        "    selection-color: white;"
+        "    background-color: white;"
+        "}"
+        ""
+        "QPushButton {"
+        "    border: none;"
+        "    border-radius: 8px;"
+        "    font-size: 14px;"
+        "    font-weight: bold;"
+        "    color: white;"
+        "    background-color: #2196F3;"
+        "    padding: 8px 20px;"
+        "    min-width: 80px;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: #1976D2;"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #1565C0;"
+        "}"
+        ""
+        "QLabel {"
+        "    font-size: 14px;"
+        "    color: #1976D2;"
+        "    font-weight: bold;"
+        "}"
+    );
 }
 
 void BookSellWidget::onCurrentIndexChanged(int index)

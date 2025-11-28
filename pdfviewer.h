@@ -40,9 +40,8 @@ private slots:
 
 private:
     void setupUI();
-
+    void setupStyle();
     void setupToolBar();
-
     void connectSignals();
 
 private:

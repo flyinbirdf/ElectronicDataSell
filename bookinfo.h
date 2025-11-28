@@ -32,10 +32,10 @@ private:
     QString m_bookId;
     BookType m_type;
 private:
-    const int WIDTH = 200;
+    const int WIDTH = 300;
     const int DETAIL_HEIGHT = 400;
     const int ABSTRACT_HEIGHT = 100;
-    const int PIC_WIDTH = 200;
+    const int PIC_WIDTH = 300;
     const int PIC_HEIGHT = 200;
 };
 

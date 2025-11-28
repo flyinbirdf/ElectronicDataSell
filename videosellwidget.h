@@ -33,8 +33,7 @@ public slots:
 
 private:
     void setupUI();
-    // 后期再生成样式
-    void setupStyle() {};
+    void setupStyle();
     void setupConnection();
 
 private:

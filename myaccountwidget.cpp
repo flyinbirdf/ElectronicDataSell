@@ -54,6 +54,9 @@ void MyAccountWidget::setupUI()
     m_mainLayout->addWidget(m_stackedWidget, 1);  // 设置拉伸因子为1，让右侧占据剩余空间
 
     setLayout(m_mainLayout);
+    
+    // 设置样式
+    setupStyle();
 }
 
 void MyAccountWidget::createToolbar()
@@ -118,6 +121,53 @@ void MyAccountWidget::setCheckedAction(QAction *curAction)
             one->setChecked(false);
         }
     }
+}
+
+void MyAccountWidget::setupStyle()
+{
+    setStyleSheet(
+        "QWidget {"
+        "    background-color: #E3F2FD;"
+        "}"
+        ""
+        "QToolBar {"
+        "    background-color: #BBDEFB;"
+        "    border: none;"
+        "    border-radius: 8px;"
+        "    padding: 10px;"
+        "    spacing: 5px;"
+        "}"
+        ""
+        "QToolBar QToolButton {"
+        "    background-color: transparent;"
+        "    border: 2px solid transparent;"
+        "    border-radius: 6px;"
+        "    padding: 12px 15px;"
+        "    font-size: 14px;"
+        "    font-weight: bold;"
+        "    color: #1976D2;"
+        "    text-align: left;"
+        "}"
+        ""
+        "QToolBar QToolButton:hover {"
+        "    background-color: #90CAF9;"
+        "    color: #0D47A1;"
+        "}"
+        ""
+        "QToolBar QToolButton:checked {"
+        "    background-color: #42A5F5;"
+        "    color: white;"
+        "    border: 2px solid #1976D2;"
+        "}"
+        ""
+        "QToolBar QToolButton:checked:hover {"
+        "    background-color: #2196F3;"
+        "}"
+        ""
+        "QStackedWidget {"
+        "    background-color: #E3F2FD;"
+        "}"
+    );
 }
 
 

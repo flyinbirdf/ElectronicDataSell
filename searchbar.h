@@ -27,6 +27,8 @@ signals:
 public slots:
     void SearchBtnClicked(bool);
 private:
+    void setupStyle();
+private:
     QLineEdit *m_searchEdit;
     QPushButton *m_searchBtn;
     std::shared_ptr<JsonTcpClient> m_socket;

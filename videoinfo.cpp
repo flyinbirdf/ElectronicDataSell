@@ -20,11 +20,11 @@ VideoInfo::VideoInfo(VideoType type, QWidget *parent): QWidget(parent)
     layout->addWidget(m_description);
 
     QHBoxLayout *hlayout = new QHBoxLayout();
-    m_priceLabel->setFixedSize(WIDTH/3, 30);
+    //m_priceLabel->setFixedSize(WIDTH/3, 30);
     hlayout->addWidget(m_priceLabel);
-    m_showDetail->setFixedSize(WIDTH/3, 30);
+    //m_showDetail->setFixedSize(WIDTH/3, 30);
     hlayout->addWidget(m_showDetail);
-    m_buyBtn->setFixedSize(WIDTH/3, 30);
+    //m_buyBtn->setFixedSize(WIDTH/3, 30);
     hlayout->addWidget(m_buyBtn);
 
     layout->addLayout(hlayout);
@@ -37,7 +37,34 @@ VideoInfo::VideoInfo(VideoType type, QWidget *parent): QWidget(parent)
     hlayout->setContentsMargins(0,0,0,0);
     hlayout->setSpacing(0);
 
-    this->setStyleSheet("background: rgba(184, 203, 221, 128);");
+    // 设置卡片样式 - 淡蓝色主题
+    setStyleSheet(
+        "QWidget {"
+        "    background-color: white;"
+        "    border: 2px solid #BBDEFB;"
+        "    border-radius: 12px;"
+        "}"
+        ""
+        "QLabel {"
+        "    background-color: transparent;"
+        "    color: #424242;"
+        "}"
+        ""
+        "QPushButton {"
+        "    border: none;"
+        "    border-radius: 6px;"
+        "    font-size: 12px;"
+        "    font-weight: bold;"
+        "    color: white;"
+        "    background-color: #2196F3;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: #1976D2;"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #1565C0;"
+        "}"
+    );
 }
 
 void VideoInfo::setInfo(QString bgPix, QString title, QString detail, int price, QString videoId)

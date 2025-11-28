@@ -71,6 +71,9 @@ void Dialog::createToolbar()
     connect(m_classifyBar, &QToolBar::actionTriggered, this, &Dialog::actionTriggered);
 
     m_bookAction->setChecked(true);
+    
+    // 设置主窗口和工具栏样式
+    setupStyle();
 }
 
 void Dialog::setCheckedAction(QAction *curAction)
@@ -131,4 +134,52 @@ void Dialog::actionTriggered(QAction *action)
 void Dialog::onPdfViewerReturnBtnCliced()
 {
     m_stackedWidget->setCurrentWidget(m_bookSellWidget);
+}
+
+void Dialog::setupStyle()
+{
+    // 设置主窗口淡蓝色背景
+    setStyleSheet(
+        "QDialog {"
+        "    background-color: #E3F2FD;"
+        "}"
+        ""
+        "QToolBar {"
+        "    background-color: #BBDEFB;"
+        "    border: none;"
+        "    border-radius: 8px;"
+        "    padding: 8px;"
+        "    spacing: 5px;"
+        "}"
+        ""
+        "QToolBar QToolButton {"
+        "    background-color: transparent;"
+        "    border: 2px solid transparent;"
+        "    border-radius: 6px;"
+        "    padding: 10px 20px;"
+        "    font-size: 14px;"
+        "    font-weight: bold;"
+        "    color: #1976D2;"
+        "    min-width: 100px;"
+        "}"
+        ""
+        "QToolBar QToolButton:hover {"
+        "    background-color: #90CAF9;"
+        "    color: #0D47A1;"
+        "}"
+        ""
+        "QToolBar QToolButton:checked {"
+        "    background-color: #42A5F5;"
+        "    color: white;"
+        "    border: 2px solid #1976D2;"
+        "}"
+        ""
+        "QToolBar QToolButton:checked:hover {"
+        "    background-color: #2196F3;"
+        "}"
+        ""
+        "QStackedWidget {"
+        "    background-color: #E3F2FD;"
+        "}"
+    );
 }

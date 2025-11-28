@@ -22,11 +22,11 @@ BookInfo::BookInfo(BookType type, QWidget *parent): QWidget(parent)
     layout->addWidget(m_description);
 
     QHBoxLayout *hlayout = new QHBoxLayout();
-    m_price->setFixedSize(WIDTH/3, 30);
+    m_price->setFixedSize(WIDTH/4, 30);
     hlayout->addWidget(m_price);
-    m_showDetail->setFixedSize(WIDTH/3, 30);
+    m_showDetail->setFixedSize(WIDTH/4, 30);
     hlayout->addWidget(m_showDetail);
-    m_buyBtn->setFixedSize(WIDTH/3, 30);
+    m_buyBtn->setFixedSize(WIDTH/4, 30);
     hlayout->addWidget(m_buyBtn);
     hlayout->setContentsMargins(0,0,0,0);
     hlayout->setSpacing(0);
@@ -41,8 +41,35 @@ BookInfo::BookInfo(BookType type, QWidget *parent): QWidget(parent)
     hlayout->setContentsMargins(0,0,0,0);
     hlayout->setSpacing(0);
 
-    this->setStyleSheet("background: rgba(184, 203, 221, 128);");
-    //m_title->setStyleSheet("background-color: rgba(255, 0, 0, 255);");
+    // 设置卡片样式 - 淡蓝色主题
+    setStyleSheet(
+        "QWidget {"
+        "    background-color: white;"
+        "    border: 2px solid #BBDEFB;"
+        "    border-radius: 12px;"
+        "}"
+        ""
+        "QLabel {"
+        "    background-color: transparent;"
+        "    color: #424242;"
+        "}"
+        ""
+        "QPushButton {"
+        "    border: none;"
+        "    border-radius: 6px;"
+        "    font-size: 12px;"
+        "    font-weight: bold;"
+        "    color: white;"
+        "    background-color: #2196F3;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: #1976D2;"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #1565C0;"
+        "}"
+    );
+    
     connect(m_showDetail, &QPushButton::clicked, this, [=](bool) {
         qDebug()<<"Send showDetail";
         emit showDetail("C:\\D盘\\gitProject\\ElectronicDataSell\\test.pdf", m_type);

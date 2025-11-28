@@ -59,7 +59,7 @@ void LoginWidget::setupUI()
     // 添加分割线或文字
     QLabel *dividerLabel = new QLabel(tr("或"), this);
     dividerLabel->setAlignment(Qt::AlignCenter);
-    dividerLabel->setStyleSheet("color: #999999;");
+    dividerLabel->setStyleSheet("color: #64B5F6; font-size: 14px;");
     m_mainLayout->addWidget(dividerLabel);
     
     m_mainLayout->addWidget(m_wechatLoginBtn);
@@ -70,43 +70,45 @@ void LoginWidget::setupUI()
 
 void LoginWidget::setupStyle()
 {
-    // 设置窗口样式
+    // 设置窗口样式 - 淡蓝色主题
     setStyleSheet(
         "QWidget {"
-        "    background-color: #f5f5f5;"
+        "    background-color: #E3F2FD;"
         "}"
         ""
         "QLabel#titleLabel {"
-        "    font-size: 32px;"
+        "    font-size: 36px;"
         "    font-weight: bold;"
-        "    color: #333333;"
+        "    color: #1976D2;"
         "    margin-bottom: 30px;"
         "}"
         ""
         "QLineEdit {"
-        "    border: 2px solid #e0e0e0;"
-        "    border-radius: 8px;"
-        "    padding: 10px 15px;"
+        "    border: 2px solid #BBDEFB;"
+        "    border-radius: 10px;"
+        "    padding: 12px 18px;"
         "    font-size: 14px;"
         "    background-color: white;"
+        "    color: #333333;"
         "}"
         "QLineEdit:focus {"
-        "    border: 2px solid #4CAF50;"
+        "    border: 2px solid #2196F3;"
+        "    background-color: #F5FAFF;"
         "}"
         ""
         "QPushButton {"
         "    border: none;"
-        "    border-radius: 8px;"
+        "    border-radius: 10px;"
         "    font-size: 16px;"
         "    font-weight: bold;"
         "    color: white;"
-        "    background-color: #4CAF50;"
+        "    background-color: #2196F3;"
         "}"
         "QPushButton:hover {"
-        "    background-color: #45a049;"
+        "    background-color: #1976D2;"
         "}"
         "QPushButton:pressed {"
-        "    background-color: #3d8b40;"
+        "    background-color: #1565C0;"
         "}"
         ""
         "QPushButton#wechatBtn {"
