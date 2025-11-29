@@ -1,7 +1,7 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network #webenginewidgets
-QT += pdf pdfwidgets multimedia multimediawidgets
+QT += pdf pdfwidgets multimedia multimediawidgets sql
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     bookinfo.cpp \
     booksellwidget.cpp \
+    documentanalyze.cpp \
     loginwidget.cpp \
     main.cpp \
     dialog.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     bookinfo.h \
     booksellwidget.h \
     dialog.h \
+    documentanalyze.h \
     loginwidget.h \
     messagebuilder.h \
     myaccountwidget.h \
